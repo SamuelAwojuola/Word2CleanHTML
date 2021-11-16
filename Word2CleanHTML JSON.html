@@ -30,12 +30,9 @@
 		table#detailsSection td#posttitle {
 			background-color: white;
 		}
-
-		table#detailsSection td#posttitle:empty {
-			font-style: italic;
-		}
-
+				
 		table#detailsSection .editable[data-placeholder]:empty:not(:focus):not([data-div-placeholder-content]):before {
+			font-style: italic;
 			content: attr(data-placeholder);
 			float: left;
 			margin-left: 2px;
@@ -76,31 +73,16 @@
 				<tr class="category">
 					<td>Category</td>
 					<td>
-						<select name="Category" id="category">
-							<option value="">--Choose Category--</option>
-							<option value="Angel of Yahweh">Angel of Yahweh</option>
-							<option value="Fall of Man">Fall of Man</option>
-							<option value="General_Resources">General Resources</option>
-							<option value="Timeline">Bible Timelines</option>
-							<option value="BibleNodeGraph">BibleNodeGraph</option>
-						</select>
+						<select name="Category" id="category"></select>
 					</td>
 				</tr>
 				<tr class="layout">
 					<td>Layout</td>
 					<td>
-						<select name="layout" id="layout">
-							<option value="">--Choose Layout--</option>
-							<option value="angelOfYahwehTEMPLATE-1">Angel of Yahweh-1</option>
-							<option value="angelOfYahwehTEMPLATE-2">Angel of Yahweh-1</option>
-							<option value="fallOfManTEMPLATE">Fall of Man</option>
-							<option value="generalResourcesTEMPLATE">General Resources</option>
-							<option value="bibleStoryLineCREATOR">BibleStoryLine</option>
-							<option value="bibleNodeGraph-1">BibleNodeGraph</option>
-						</select>
+						<select name="layout" id="layout"></select>
 					</td>
 				</tr>
-				<tr class="postdate">
+				<tr class="posttitle">
 					<td>Date</td>
 					<td>
 						<input id="postdate" type="date" name="postdate">
@@ -117,6 +99,48 @@
 		<textarea id="timelinetable" class="timeline" placeholder="Hello..."></textarea>
 	</section>
 </body>
+<!-- Populate Select Lists with Layouts and Categories from JSON file -->
+<script>
+	const selectLayout = document.querySelector('#layout');
+	const selectCategory = document.querySelector('#category');
+
+	let requestURL = 'githubLayoutsCategories.json';
+	let request = new XMLHttpRequest();
+	request.open('GET', requestURL);
+	request.responseType = 'json';
+	request.send();
+
+	request.onload = function () {
+		const layoutsAndCategories = request.response;
+		populateLayOut(layoutsAndCategories);
+		populateCategory(layoutsAndCategories);
+	}
+
+	function populateLayOut(obj) {
+		const layouts = obj['layouts'];
+
+		for (let i = 0; i < layouts.length; i++) {
+			const myOption1 = document.createElement('option');
+
+			myOption1.value = layouts[i].value;
+			myOption1.textContent = layouts[i].display;
+			selectLayout.appendChild(myOption1);
+		}
+	}
+
+	function populateCategory(obj) {
+		const categories = obj['categories'];
+
+		for (let i = 0; i < categories.length; i++) {
+			const myOption2 = document.createElement('option');
+
+			myOption2.value = categories[i].value;
+			myOption2.textContent = categories[i].display;
+			selectCategory.appendChild(myOption2);
+		}
+	}
+</script>
+
 <!--TinyMCE Script-->
 <script>
 	tinymce.init({
@@ -152,7 +176,7 @@
 			var filename = posttitleValue + `.html`;
 
 			var jekyllFrontMatter =
-`---` + `
+				`---` + `
 layout: ` + layoutValue + `
 title: "` + posttitleValue + `"` + `
 categories: ` + categoryValue + `
