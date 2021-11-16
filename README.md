@@ -4,8 +4,8 @@ On clicking the upload button, the assigned github repository will be opened and
 ## Set Up
 It requires that the repository with the layout and categories already be created. These then will be made into a select list from which the relevant the desired layout and category is selected. 
 There are two versions here,
-1. "Word2CleanHTML JSON.html" which generates the categories and layouts from a JSON file (githubLayoutsCategories.json) in the root directory. Edit the JSON file to,
+1. "**Word2CleanHTML_JSON.html**" which generates the categories and layouts from the JSON file *(githubLayoutsCategories.json)* in the root directory. Edit the JSON file to,
     * Set the github repository to open when you click the upload button. This would be the repository to which you intend to load the generated file. 
     * Edit the list of categories,
     * Edit the list of layouts
-2. "Word2CleanHTML.html" which does not use any JSON file. To modify the layouts and categories list, you have to edit the html file itself.
+2. "**Word2CleanHTML.html**" which does not use any JSON file. To modify the layouts and categories list, you have to edit the html file itself.
