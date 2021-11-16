@@ -42,6 +42,7 @@
 		body {
 			margin: 0;
 			background-color: rgb(235, 229, 217);
+			height: 100vh;
 		}
 
 		section {
@@ -223,9 +224,7 @@ date: ` + dateValue + `
 				console.log(xyz);
 
 				//open LightCity Github Repository in another browser tab
-				console.log(layoutsAndCategories.githubrepository)
-				window.open(layoutsAndCategories.githubrepository);
-				// window.open('file:///C:\Users\man\Downloads');
+				window.open(layoutsAndCategories.githubrepository);//get the url from the json file
 			}
 		}
 	}
