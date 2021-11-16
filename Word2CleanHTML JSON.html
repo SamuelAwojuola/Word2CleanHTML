@@ -30,7 +30,7 @@
 		table#detailsSection td#posttitle {
 			background-color: white;
 		}
-				
+
 		table#detailsSection .editable[data-placeholder]:empty:not(:focus):not([data-div-placeholder-content]):before {
 			font-style: italic;
 			content: attr(data-placeholder);
@@ -99,48 +99,6 @@
 		<textarea id="timelinetable" class="timeline" placeholder="Hello..."></textarea>
 	</section>
 </body>
-<!-- Populate Select Lists with Layouts and Categories from JSON file -->
-<script>
-	const selectLayout = document.querySelector('#layout');
-	const selectCategory = document.querySelector('#category');
-
-	let requestURL = 'githubLayoutsCategories.json';
-	let request = new XMLHttpRequest();
-	request.open('GET', requestURL);
-	request.responseType = 'json';
-	request.send();
-
-	request.onload = function () {
-		const layoutsAndCategories = request.response;
-		populateLayOut(layoutsAndCategories);
-		populateCategory(layoutsAndCategories);
-	}
-
-	function populateLayOut(obj) {
-		const layouts = obj['layouts'];
-
-		for (let i = 0; i < layouts.length; i++) {
-			const myOption1 = document.createElement('option');
-
-			myOption1.value = layouts[i].value;
-			myOption1.textContent = layouts[i].display;
-			selectLayout.appendChild(myOption1);
-		}
-	}
-
-	function populateCategory(obj) {
-		const categories = obj['categories'];
-
-		for (let i = 0; i < categories.length; i++) {
-			const myOption2 = document.createElement('option');
-
-			myOption2.value = categories[i].value;
-			myOption2.textContent = categories[i].display;
-			selectCategory.appendChild(myOption2);
-		}
-	}
-</script>
-
 <!--TinyMCE Script-->
 <script>
 	tinymce.init({
@@ -160,23 +118,71 @@
 	});
 </script>
 
-<!-- TO CREATE AND UPLOAD FILE TO LIGHTCITY GITHUB REPOSITORY -->
 <script>
+	// Populate Select Lists with Layouts and Categories from JSON file
+	var selectLayout = document.querySelector('#layout');
+	var selectCategory = document.querySelector('#category');
+
+	var requestURL = 'githubLayoutsCategories.json';
+	var request = new XMLHttpRequest();
+	request.open('GET', requestURL);
+	request.responseType = 'json';
+	request.send();
+
+	request.onload = function () {
+		var layoutsAndCategories = request.response;
+		populateLayOut(layoutsAndCategories);
+		populateCategory(layoutsAndCategories);
+	}
+
+	function populateLayOut(obj) {
+		var layouts = obj['layouts'];
+
+		for (let i = 0; i < layouts.length; i++) {
+			var myOption1 = document.createElement('option');
+
+			myOption1.value = layouts[i].value;
+			myOption1.textContent = layouts[i].display;
+			selectLayout.appendChild(myOption1);
+		}
+	}
+
+	function populateCategory(obj) {
+		var categories = obj['categories'];
+
+		for (let i = 0; i < categories.length; i++) {
+			var myOption2 = document.createElement('option');
+
+			myOption2.value = categories[i].value;
+			myOption2.textContent = categories[i].display;
+			selectCategory.appendChild(myOption2);
+		}
+	}
+
+	// TO CREATE AND UPLOAD FILE TO LIGHTCITY GITHUB REPOSITORY
 	function saveDynamicDataToFile() {
+		var requestURL = 'githubLayoutsCategories.json';
+		var request = new XMLHttpRequest();
+		request.open('GET', requestURL);
+		request.responseType = 'json';
+		request.send();
 
-		var layoutValue = document.getElementById("layout").value;
-		var posttitleValue = document.getElementById("posttitle").innerText;
-		var categoryValue = document.getElementById("category").value;
-		var dateValue = document.getElementById("postdate").value;
+		request.onload = function () {
+			var layoutsAndCategories = request.response;
 
-		if ((!layoutValue) || (!posttitleValue) || (!categoryValue) || (!dateValue)) {
-			alert("!!! PLEASE FILL IN ALL DETAILS !!!");
-			return false;
-		} else {
-			var filename = posttitleValue + `.html`;
+			var layoutValue = document.getElementById("layout").value;
+			var posttitleValue = document.getElementById("posttitle").innerText;
+			var categoryValue = document.getElementById("category").value;
+			var dateValue = document.getElementById("postdate").value;
 
-			var jekyllFrontMatter =
-				`---` + `
+			if ((!layoutValue) || (!posttitleValue) || (!categoryValue) || (!dateValue)) {
+				alert("!!! PLEASE FILL IN ALL DETAILS !!!");
+				return false;
+			} else {
+				var filename = posttitleValue + `.html`;
+
+				var jekyllFrontMatter =
+					`---` + `
 layout: ` + layoutValue + `
 title: "` + posttitleValue + `"` + `
 categories: ` + categoryValue + `
@@ -185,45 +191,45 @@ date: ` + dateValue + `
 
 `;
 
-			//Non-Beautified Code
-			var contents = tinymce.activeEditor.getContent();
+				//Non-Beautified Code
+				var contents = tinymce.activeEditor.getContent();
 
-			//Beautified Code
-			var HtmlCode = contents;
-			var beautified_HtmlCode = contents;
+				//Beautified Code
+				var HtmlCode = contents;
+				var beautified_HtmlCode = contents;
 
-			if (typeof (html_beautify) === "function") {
-				options = {
-					"indent_size": 4
-				};
-				HtmlCode = HtmlCode.replace(/<\/li>[\r\n]*[\\s]*<\/ol>[\r\n]*[\\s]*<ol>/g, '');
-				HtmlCode = HtmlCode.replace(/(<\/ol>[\r\n]*[\\s]*)(<li>)/g, '$1</li>$2');
-				HtmlCode = HtmlCode.replace(/<\/ol>[\r\n\\s]*<ol>/g, '');
-				HtmlCode = HtmlCode.replace(/<\/li>([\r\n]*[\\s]*<ol>)/g, '$1');
-				HtmlCode = html_beautify(HtmlCode, options);
-				beautified_HtmlCode = HtmlCode;
+				if (typeof (html_beautify) === "function") {
+					options = {
+						"indent_size": 4
+					};
+					HtmlCode = HtmlCode.replace(/<\/li>[\r\n]*[\\s]*<\/ol>[\r\n]*[\\s]*<ol>/g, '');
+					HtmlCode = HtmlCode.replace(/(<\/ol>[\r\n]*[\\s]*)(<li>)/g, '$1</li>$2');
+					HtmlCode = HtmlCode.replace(/<\/ol>[\r\n\\s]*<ol>/g, '');
+					HtmlCode = HtmlCode.replace(/<\/li>([\r\n]*[\\s]*<ol>)/g, '$1');
+					HtmlCode = html_beautify(HtmlCode, options);
+					beautified_HtmlCode = HtmlCode;
+				}
+
+				//Non-Beautified
+				// var xyz = jekyllFrontMatter + contents;
+
+				//Beautified
+				var xyz = jekyllFrontMatter + beautified_HtmlCode;
+
+				var blob = new Blob([xyz], {
+					type: "text/plain;charset=utf-8"
+				});
+				saveAs(blob, filename);
+				console.log(xyz);
+
+				//open LightCity Github Repository in another browser tab
+				console.log(layoutsAndCategories.githubrepository)
+				window.open(layoutsAndCategories.githubrepository);
+				// window.open('file:///C:\Users\man\Downloads');
 			}
-
-			//Non-Beautified
-			// var xyz = jekyllFrontMatter + contents;
-
-			//Beautified
-			var xyz = jekyllFrontMatter + beautified_HtmlCode;
-
-			var blob = new Blob([xyz], {
-				type: "text/plain;charset=utf-8"
-			});
-			saveAs(blob, filename);
-			console.log(xyz);
-
-			//open LightCity Github Repository in another browser tab
-			window.open('https://github.com/LightCityTeachingFellowship/BibleStudies');
-			// window.open('file:///C:\Users\man\Downloads');
 		}
 	}
-</script>
 
-<script>
 	function uploadClick() {
 		saveDynamicDataToFile();
 		return true;
