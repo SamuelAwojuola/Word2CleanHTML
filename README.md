@@ -8,4 +8,5 @@ There are two versions here,
     * Set the github repository to open when you click the upload button. This would be the repository to which you intend to load the generated file. 
     * Edit the list of categories,
     * Edit the list of layouts
-2. "**Word2CleanHTML.html**" which does not use any JSON file. To modify the layouts and categories list, you have to edit the html file itself.
+    PLEASE NOTE that this version cannot work without a server. So if you download it you have to use a local server. A solution to this is to use VSCode and "Go Live".
+2. "**Word2CleanHTML.html**" which does not use any JSON file and can work without a server. To modify the layouts and categories list, you have to edit the html file itself.
