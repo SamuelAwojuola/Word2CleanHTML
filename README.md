@@ -10,5 +10,5 @@ This generates the categories and layouts from the JSON file *(githubLayoutsCate
  * Edit the list of categories,
  * Edit the list of layouts
  PLEASE NOTE that this version cannot work without a server. So if you download it you have to use a local server. A solution to this is to use VSCode and "Go Live".
-###Word2CleanHTML.html
+### Word2CleanHTML.html
 This does not use any JSON file and can work without a server. To modify the layouts and categories list, you have to edit the html file itself.
