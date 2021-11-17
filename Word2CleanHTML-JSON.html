@@ -204,9 +204,9 @@ date: ` + dateValue + `
 						"indent_size": 4
 					};
 					HtmlCode = HtmlCode.replace(/<\/li>[\r\n]*[\\s]*<\/ol>[\r\n]*[\\s]*<ol>/g, '');
-					HtmlCode = HtmlCode.replace(/(<\/ol>[\r\n]*[\\s]*)(<li>)/g, '$1</li>$2');
+					HtmlCode = HtmlCode.replace(/(<\/ol>[\r\n]*[\\s]*)(<li>)/g, '</li>');
 					HtmlCode = HtmlCode.replace(/<\/ol>[\r\n\\s]*<ol>/g, '');
-					HtmlCode = HtmlCode.replace(/<\/li>([\r\n]*[\\s]*<ol>)/g, '$1');
+					HtmlCode = HtmlCode.replace(/<\/li>([\r\n]*[\\s]*<ol>)/g, '');
 					HtmlCode = html_beautify(HtmlCode, options);
 					beautified_HtmlCode = HtmlCode;
 				}
